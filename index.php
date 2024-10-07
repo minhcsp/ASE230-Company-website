@@ -1,5 +1,6 @@
 <?php
     require 'lib/readText.php';
+    require 'lib/readJSON.php'
 ?>
 
 <!DOCTYPE html>
@@ -156,134 +157,55 @@
     </section>
     <!--END FEATURES-->
 
-    <!--START SERVICES-->
-    <section class="section bg-light " id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h1 class="section-title text-center">Our Services</h1>
-                    <div class="section-title-border mt-3"></div>
-                    <p class="section-subtitle text-muted text-center pt-4 font-secondary"><?php echo readPlainText('statement.txt'); ?></p>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-diamond text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Digital Design</h4>
-                                <p class="pt-2 text-muted">Some quick example text to build on the card title and make
-                                    up the bulk of the card's content. Moltin gives platform.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-display2 text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Unlimited Colors</h4>
-                                <p class="pt-2 text-muted">Credibly brand standards compliant users without extensible
-                                    services. Anibh euismod tincidunt laoreet Ipsum passage.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-piggy text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Strategy Solutions</h4>
-                                <p class="pt-2 text-muted">Separated they live in Bookmarksgrove right at the coast of
-                                    the Semantics, and large language ocean neary regelia.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-science text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Awesome Support</h4>
-                                <p class="pt-2 text-muted">It is a paradisematic country, in which roasted parts of
-                                    sentences fly into your mouth leave for the far World.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-news-paper text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Truly Multipurpose</h4>
-                                <p class="pt-2 text-muted">Even the all-powerful Pointing has no control about the blind
-                                    texts it is an almost unorthographic.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-plane text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Easy to customize</h4>
-                                <p class="pt-2 text-muted">Question Marks and devious Semikoli, but the Little Blind
-                                    Text didn’t listen. She packed her seven versalia.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <?php
+    $services = readJSON('services.json');
 
-            <div class="row">
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-arc text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Pixel Perfect Design</h4>
-                                <p class="pt-2 text-muted">There are many variations of passages of Lorem Ipsum
-                                    available, but the majority have suffered alteration.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-tools text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Perfect Toolbox</h4>
-                                <p class="pt-2 text-muted">Hampden-Sydney College in Virginia, looked up one of the more
-                                    obscure Latin words, consectetur.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mt-4">
-                    <div class="services-box">
-                        <div class="d-flex">
-                            <i class="pe-7s-timer text-primary"></i>
-                            <div class="ms-4">
-                                <h4>Awesome Design</h4>
-                                <p class="pt-2 text-muted">All the Lorem Ipsum generators on the Internet tend to repeat
-                                    predefined chunks as necessary.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    function displayApplications($applications) {
+        echo '<ul class="pt-2 text-muted">';
+        foreach ($applications as $application) {
+            echo '<li>' . $application . '</li>';
+        }
+        echo '</ul>';
+    }
+
+    function displayServices($services) {
+        foreach ($services['products_services'] as $service) {
+            echo '<div class="col-lg-6 mt-4">';
+            echo '<div class="services-box">';
+            echo '<div class="d-flex">';
+            echo '<i class="pe-7s-diamond text-primary"></i>';
+            echo '<div class="ms-4">';
+            echo '<h4>' . $service['name'] . '</h4>';
+            echo '<p class="pt-2 text-muted">' . $service['description'] . '</p>';
+            
+            echo '<h5>Applications:</h5>';
+            displayApplications($service['applications']);
+
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+    }
+    ?>
+    <!--START SERVICES-->
+    <section class="section bg-light" id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 class="section-title text-center">Our Services</h1>
+                <div class="section-title-border mt-3"></div>
+                <p class="section-subtitle text-muted text-center pt-4 font-secondary">
+                <?php echo readPlainText('statement.txt'); ?>
+                </p>
             </div>
         </div>
+        <div class="row mt-5">
+            <?php displayServices($services); ?>
+        </div>
+    </div>
     </section>
-    <!--START SERVICES-->
+    <!--END SERVICES-->
 
     <!--START WEBSITE-DESCRIPTION-->
     <section class="section bg-web-desc">
