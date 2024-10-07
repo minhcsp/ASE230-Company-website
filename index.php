@@ -1,10 +1,13 @@
+<?php
+    require 'lib/readText.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <title>Hiric</title>
+    <title><?php echo readPlainText('name.txt'); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Premium Bootstrap 5 Landing Page Template" />
     <meta name="keywords" content="bootstrap 5, premium, marketing, multipurpose" />
@@ -31,7 +34,7 @@
         <div class="container">
             <!-- LOGO -->
             <a class="navbar-brand logo text-uppercase" href="index.html">
-                <i class="mdi mdi-alien"></i>Hiric
+                <i class="mdi mdi-alien"></i><?php echo readPlainText('name.txt'); ?>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -84,27 +87,9 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-white text-center">
-                    <h4 class="home-small-title">Awesome Design</h4>
-                    <h1 class="home-title">We love make things amazing and simple</h1>
-                    <p class="pt-3 home-desc mx-auto">Maecenas class semper class semper sollicitudin lectus lorem
-                        iaculis imperdiet aliquam vehicula tempor auctor curabitur pede aenean ornare.</p>
-                    <p class="play-shadow mt-4" data-bs-toggle="modal" data-bs-target="#watchvideomodal"><a
-                            href="javascript: void(0);" class="play-btn video-play-icon"><i
-                                class="mdi mdi-play text-center"></i></a></p>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="watchvideomodal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body p-0" style="margin-bottom: -8px;">
-                                    <video id="VisaChipCardVideo" class="video-box" controls  width="800" >
-                                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" >
-                                        <!--Browser does not support <video> tag -->
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h4 class="home-small-title">WELCOME TO</h4>
+                    <h1 class="home-title"><?php echo readPlainText('name.txt'); ?></h1>
+                    <p class="pt-3 home-desc mx-auto"><?php echo readPlainText('overview.txt'); ?></p>
                 </div>
             </div>
         </div>
@@ -178,9 +163,7 @@
                 <div class="col-lg-8 offset-lg-2">
                     <h1 class="section-title text-center">Our Services</h1>
                     <div class="section-title-border mt-3"></div>
-                    <p class="section-subtitle text-muted text-center pt-4 font-secondary">We craft digital, graphic and
-                        dimensional thinking, to create category leading brand experiences that have meaning and add a
-                        value for our clients.</p>
+                    <p class="section-subtitle text-muted text-center pt-4 font-secondary"><?php echo readPlainText('statement.txt'); ?></p>
                 </div>
             </div>
             <div class="row mt-5">
@@ -692,7 +675,7 @@
             <div class="row">
                 <div class="col-lg-3 mt-4">
                     <a class="footer-logo text-uppercase" href="#">
-                        <i class="mdi mdi-alien"></i>Hiric
+                        <i class="mdi mdi-alien"></i><?php echo readPlainText('name.txt'); ?>
                     </a>
                     <div class="text-muted mt-4">
                         <ul class="list-unstyled footer-list">
@@ -749,7 +732,7 @@
                         <p class="copy-rights  mb-3 mb-sm-0">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> © Hiric - Themesbrand
+                            </script> © <?php echo readPlainText('name.txt'); ?>
                         </p>
                     </div>
                     <div class="float-sm-end pull-none copyright">
