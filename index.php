@@ -1,6 +1,6 @@
 <?php
     require 'lib/readText.php';
-
+    require 'lib/readJSON.php';
 ?>
 
 <!DOCTYPE html>
@@ -82,13 +82,90 @@
     </section>
     <!--END HOME-->
 
+    <?php
+    $services = readJSON('services.json');
+
+    function displayApplications($applications) {
+        echo '<ul class="pt-2 text-muted">';
+        foreach ($applications as $application) {
+            echo '<li>' . $application . '</li>';
+        }
+        echo '</ul>';
+    }
+
+    function displayServices($services) {
+        foreach ($services['products_services'] as $service) {
+            echo '<div class="col-lg-6 mt-4">';
+            echo '<div class="services-box">';
+            echo '<div class="d-flex">';
+            echo '<i class="pe-7s-diamond text-primary"></i>';
+            echo '<div class="ms-4">';
+            echo '<h4>' . $service['name'] . '</h4>';
+            echo '<p class="pt-2 text-muted">' . $service['description'] . '</p>';
+            
+            echo '<h5>Applications:</h5>';
+            displayApplications($service['applications']);
+
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+        }
+    }
+    ?>
+
     <!--START SERVICES-->
+    <section class="section bg-light" id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h1 class="section-title text-center">Our Services</h1>
+                <div class="section-title-border mt-3"></div>
+                <p class="section-subtitle text-muted text-center pt-4 font-secondary">
+                <?php echo readPlainText('statement.txt'); ?>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <?php displayServices($services); ?>
+        </div>
+    </div>
+    </section>
     <!--END SERVICES-->
 
     <!--START ABOUT-US-->
     <!--END ABOUT-US-->
 
+    <?php
+    function displayAwards($awards) {
+        if (is_array($awards) && !empty($awards)) {
+            foreach ($awards as $award) {
+                if (isset($award['year']) && isset($award['achievement'])) {
+                    echo '<p class="text-white" style="font-size: 14px;">' . htmlspecialchars($award['year']) . ': ' . htmlspecialchars($award['achievement']) . '</p>';
+                }
+            }
+        } else {
+            echo '<p class="text-white">No awards found.</p>';
+        }
+    }
+    ?>
     <!--START AWARD-->
+    <section class="section section-lg bg-get-start" id="awards">
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h1 class="get-started-title text-white">Our Awards</h1>
+                    <p class="section-subtitle font-secondary text-white pt-4">
+                        <?php
+                        $awards = readJSON('awards.json');
+                        displayAwards($awards['awards']);
+                        ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
     <!--END AWARD-->
 
     <!-- CONTACT FORM START-->
@@ -212,6 +289,7 @@
         </div>
     </footer>
     <!--END FOOTER-->
+
 
     <!--START FOOTER ALTER-->
     <div class="footer-alt">
