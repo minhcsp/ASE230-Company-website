@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Manage Team",
+        "href": "..\/team\/index.php"
+    },
+    {
+        "title": "Manage Awards",
+        "href": "..\/awards\/index.php"
+    },
+    {
+        "title": "Manage Products",
+        "href": "..\/products\/index.php"
+    },
+    {
+        "title": "Manage Contacts",
+        "href": "..\/contacts\/index.php"
+    }
+]

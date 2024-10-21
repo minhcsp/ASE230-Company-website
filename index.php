@@ -35,7 +35,7 @@
         id="navbar">
         <div class="container">
             <!-- LOGO -->
-            <a class="navbar-brand logo text-uppercase" href="index.html">
+            <a class="navbar-brand logo text-uppercase" href="index.php">
                 <i class="mdi mdi-alien"></i><?php echo readPlainText('name.txt'); ?>
             </a>
 
@@ -61,6 +61,9 @@
                     <li class="nav-item">
                         <a data-scroll href="#contact" class="nav-link">Contact</a>
                     </li>
+                    <li class="nav-item">
+                        <a data-scroll href="admin/pages/index.php" class="nav-link">Admin</a>
+                    </li>
 
                 </ul>
             </div>
@@ -84,7 +87,7 @@
     <!--END HOME-->
 
     <?php
-    $services = readJSON('services.json');
+    $services = readJSON('admin/products/services.json');
 
     function displayApplications($applications) {
         echo '<ul class="pt-2 text-muted">';
@@ -136,7 +139,7 @@
 
 
     <?php
-    $teamData = readCSV('team.csv');
+    $teamData = readCSV('admin/team/team.csv');
 
     function displayTeamMembers($teamData) {
         for ($i = 1; $i < count($teamData); $i++) {
@@ -206,7 +209,7 @@
                     <h1 class="get-started-title text-white">Our Awards</h1>
                     <p class="section-subtitle font-secondary text-white pt-4">
                         <?php
-                        $awards = readJSON('awards.json');
+                        $awards = readJSON('admin/awards/awards.json');
                         displayAwards($awards['awards']);
                         ?>
                     </p>
@@ -216,16 +219,46 @@
     </section>
     <!--END AWARD-->
 
+
+    <?php
+    $jsonFile = 'admin/contacts/contacts.json';
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Collect form data
+        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+        $subject = isset($_POST['subject']) ? $_POST['subject'] : '';
+        $comments = isset($_POST['comments']) ? $_POST['comments'] : '';
+
+        $contactData = [
+            'name' => $name,
+            'email' => $email,
+            'subject' => $subject,
+            'comments' => $comments,
+            'timestamp' => date('Y-m-d H:i:s')
+        ];
+
+        if (file_exists($jsonFile)) {
+            $currentData = json_decode(file_get_contents($jsonFile), true);
+            $currentData[] = $contactData;
+        } else {
+            $currentData = [$contactData];
+        }
+
+        file_put_contents($jsonFile, json_encode($currentData, JSON_PRETTY_PRINT));
+
+        $successMessage = "Your message has been sent successfully.";
+    }
+    ?>
     <!-- CONTACT FORM START-->
-    <section class="section " id="contact">
+    <section class="section" id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <h1 class="section-title text-center">Get In Touch</h1>
                     <div class="section-title-border mt-3"></div>
                     <p class="section-subtitle text-muted text-center font-secondary pt-4">We thrive when coming up with
-                        innovative ideas but also understand that a smart concept should be supported with faucibus
-                        sapien odio measurable
+                        innovative ideas but also understand that a smart concept should be supported with measurable
                         results.</p>
                 </div>
             </div>
@@ -243,28 +276,31 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="custom-form mt-4 pt-4">
-                        <form method="post" name="myForm" onsubmit="return validateForm()">
-                            <p id="error-msg"></p>
-                            <div id="simple-msg"></div>
+                        <?php if (isset($successMessage)): ?>
+                            <div class="alert alert-success">
+                                <?php echo $successMessage; ?>
+                            </div>
+                        <?php endif; ?>
+                        <form method="post">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group mt-2">
                                         <input name="name" id="name" type="text" class="form-control"
-                                            placeholder="Your name*">
+                                            placeholder="Your name*" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group mt-2">
                                         <input name="email" id="email" type="email" class="form-control"
-                                            placeholder="Your email*">
+                                            placeholder="Your email*" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group mt-2">
-                                        <input type="text" class="form-control" id="subject"
-                                            placeholder="Your Subject.." />
+                                        <input type="text" class="form-control" name="subject" id="subject"
+                                            placeholder="Your Subject.." required>
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +308,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group mt-2">
                                         <textarea name="comments" id="comments" rows="4" class="form-control"
-                                            placeholder="Your message..."></textarea>
+                                            placeholder="Your message..." required></textarea>
                                     </div>
                                 </div>
                             </div>
